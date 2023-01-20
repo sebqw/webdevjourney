@@ -6,7 +6,7 @@
     }
 
     p {
-        line-height: 2;
+        line-height: 3;
     }
 
 
@@ -28,6 +28,8 @@
     }
 
     h3 {
+        font-family: 'La Belle Aurore', cursive;
+        font-size: 1.5rem;
         color: #11999E;
     }
 
@@ -52,18 +54,38 @@
     }
 
     .top-container {
-        background-color: #DAEAF1;
+        background: rgb(102,191,191);
+        background: -moz-linear-gradient(0deg, rgba(102,191,191,0.35480129551820727) 30%, rgba(0,21,121,0.9178265056022409) 76%);
+        background: -webkit-linear-gradient(0deg, rgba(102,191,191,0.35480129551820727) 30%, rgba(0,21,121,0.9178265056022409) 76%);
+        background: linear-gradient(0deg, rgba(102,191,191,0.35480129551820727) 30%, rgba(0,21,121,0.9178265056022409) 76%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#66bfbf",endColorstr="#001579",GradientType=1);
         position: relative;
-        padding-top: 100px;
+        padding-top: 200px;
+        
     }
 
     .middle-container {
-        margin: 100px 0;
+        margin: 70px 0;
     }
 
     .bottom-container {
         background-color: #66bfbf;
         padding: 50px 0 20px;
+        font-size: 22px;
+        margin-left: 100px:
+    }
+    
+    .profilePic{
+        width: 35%;
+        border-radius: 50%;
+    }
+
+    .seb{
+        font-family: 'La Belle Aurore', cursive;
+        color: #66bfbf;
+        margin: 50px auto 0 auto;
+        font-size: 5.625rem;
+        line-height: 2;
     }
 
     .skill-row {
@@ -72,16 +94,17 @@
         width: 50%;
 
     }
+    
 
     .coding-gif {
         position: relative;
-        width: 15%;
+        width: 20%;
         float: left;
         margin-right: 30px;
     }
 
     .softwaresupp-img {
-        width: 15%;
+        width: 25%;
         float: right;
         margin-left: 30px;
     }
@@ -91,23 +114,36 @@
         text-decoration: underline;
     }
 
+    .help{
+        font-weight: bold;
+        font-size: 20px;
+        text-align: center;
+    }
+
 
     .contact-message {
         width: 40%;
         margin: 40px auto 60px;
     }
 
+    .mountain{
+        height: auto;
+        width: 120.5%;
+        padding-top: 100px;
+    }
+
 
     .top-cloud {
         position: absolute;
-        right: 600px;
-        top: 50px;
+        right: 100px;
+        top: 100px;
 
 
     }
 
     .bottom-cloud {
         position: absolute;
+        left: 150px;
     }
 
     .btn {
