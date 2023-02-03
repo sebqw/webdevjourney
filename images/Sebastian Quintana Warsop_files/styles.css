@@ -198,3 +198,8 @@
     .top-container-project{
         padding-bottom: 50px;
     }
+
+.brief{
+    position: relative;
+    width: 1000000px;
+}
