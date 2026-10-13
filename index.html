@@ -1,72 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sebastian Quintana Warsop</title>
+    <title>Sebastian Quintana Warsop | Web &amp; Application Developer</title>
+    <meta name="description" content="I'm Seb, an aspiring web developer with a background in C# and IT support. Here's a bit about me and some of my work.">
+    <meta property="og:title" content="Sebastian Quintana Warsop">
+    <meta property="og:description" content="An aspiring web developer with a background in C# and IT support.">
+    <meta property="og:image" content="images/seb.webp">
+    <meta name="theme-color" content="#001579">
     <link rel="icon" href="favicon.ico?v=2">
-    <link rel="stylesheet" href="CSS\styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/styles.css">
 </head>
 
 <body>
-    <div class="top-container">
-        <img class="top-cloud" src="images/cloud.png" alt="cloud-img">
-        <img class ="moon" src="images/moon.png" alt="moon-img">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <nav class="site-nav" aria-label="Main">
+        <div class="wrap">
+            <a class="logo" href="index.html">Seb.</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="project.html">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <img class="moon" src="images/moon.webp" alt="" width="400" height="400">
+        <img class="cloud cloud--top" src="images/cloud.webp" alt="" width="320" height="207">
         <h1>I'm Seb</h1>
-        <h2>an aspiring web<span class="dev">dev.</span></h2>
-        <img class="bottom-cloud" src="images/cloud.png" alt="cloud-img">
-        <img class = "mountain" src="images/mountain.png" alt="mountain">
-    </div>
-    <div class="middle-container">
-        <div class="profile">
-            <img class ="profilePic" src="images/20221029_151657542_iOS.png" alt="picOfMe">
-            <h2>Hello.</h2>
-            <p>Welcome to my website! Here are few things about me: </p>
-            <p class = "seb">Seb.</p>
-        </div>
-        <hr>
-        <div class="skills">
-            <h2>My Skills.</h2>
-            <div class="skill-row">
-                <img class="coding-gif" src="images/giphy.gif" alt="gifcode">
-                <h3>Web & Application Developer</h3>
-                <p>I love to create and learn new things about coding! </p> <p>Recently, I have embarked on my web development journey. </p> <p>After learning C# during
-                    my apprenticeship, I have decided to try my hand at web languages as you can see from this website.</p>
+        <p class="tagline">an aspiring web <span>dev.</span></p>
+        <img class="cloud cloud--bottom" src="images/cloud.webp" alt="" width="320" height="207">
+        <img class="mountain" src="images/mountain.webp" alt="" width="2000" height="900">
+    </header>
+
+    <main id="main">
+        <section id="about">
+            <div class="wrap about">
+                <img class="profile-pic" src="images/seb.webp" alt="Photo of Seb smiling, sitting at a table" width="640" height="640">
+                <div>
+                    <h2>Hello.</h2>
+                    <p>Welcome to my website! I'm a developer who loves building things, learning new tools and helping people get technology working for them. Here are a few things about me.</p>
+                    <p class="signature">Seb.</p>
+                </div>
             </div>
-            <a class="btn" href="project.html">Some work of mine.</a>
-            <div class="skill-row">
-                <hr>
-                <img class="softwaresupp-img" src="images/software.png" alt="software-supp">
-                <h3>Software Support</h3>
-                <p> I began using computers at young age, starting with the family Windows 98 PC and then Windows XP.</p>
-                <p> Many hours were spent on Newgrounds and similar flash Websites.</p>
-                  <p>  ICT piqued my interest in Primary school, and studied Computer Science at
-                GCSE where I began to learn programming in languages like Python and SmallBasic.</p> 
-                <p> After leaving school I began an IT apprenticeship completing
-            IT Application Specialist & IT Solutions Technican qualifications. </p>
-            <hr>
-            <p class = "help"> I love helping people, and solving problems. My favourite phrase to hear is: "Thanks! That worked."<p>
+        </section>
+
+        <hr class="dots">
+
+        <section id="skills">
+            <div class="wrap">
+                <div class="section-head">
+                    <h2>My Skills.</h2>
+                </div>
+
+                <div class="skills-grid">
+                    <article class="card">
+                        <img class="card-icon" src="images/coding.gif" alt="" width="84" height="84">
+                        <h3>Web &amp; Application Developer</h3>
+                        <p>I love to create things and learn new things about coding!</p>
+                        <p>After learning C# during my apprenticeship, I've embarked on my web development journey, trying my hand at web languages, as you can see from this website.</p>
+                        <a class="btn" href="project.html">See some of my work</a>
+                    </article>
+
+                    <article class="card">
+                        <img class="card-icon" src="images/software.webp" alt="" width="84" height="84">
+                        <h3>Software Support</h3>
+                        <p>I began using computers at a young age, starting with the family Windows 98 PC and then Windows XP, and spent many hours on Newgrounds and similar Flash websites.</p>
+                        <p>ICT piqued my interest in primary school, and I studied Computer Science at GCSE, where I began programming in languages like Python and Small Basic.</p>
+                        <p>After leaving school I started an IT apprenticeship, completing the IT Application Specialist and IT Solutions Technician qualifications.</p>
+                    </article>
+                </div>
+
+                <p class="quote">
+                    I love helping people and solving problems. My favourite phrase to hear is:
+                    <q>Thanks! That worked.</q>
+                </p>
             </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="wrap">
+                <h2>Get In Touch</h2>
+                <p>That's a bit about me. Now tell me about you! Send me an email or find me on X (Twitter) 😁</p>
+                <div class="button-row">
+                    <a class="btn" href="mailto:sebastianquintanawarsop@gmail.com">Email me</a>
+                    <a class="btn btn--ghost" href="https://twitter.com/qwbes" target="_blank" rel="noopener">@qwbes on X</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <p>© <span id="year">2026</span> Sebastian Quintana Warsop</p>
         </div>
-        <hr>
-        <div class="contact-me">
-            <h2>Get In Touch</h2>
-            <h3>Send me an email and find me on Twitter 😁</h3>
-            <p class="contact-message">That's a bit about me, tell me about you!</p>
-            <a class="btn" href="mailto:sebastianquintanawarsop@gmail.com">CONTACT ME</a>
-        </div>
-    </div>  
+    </footer>
 
-
-    <div class="bottom-container">
-        <a class="footer-link" href="https://twitter.com/qwbes">🐦 Twitter</a>
-        <p class="copyright">© Sebastian Quintana Warsop.</p>
-    </div>
-
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
 
 </html>
