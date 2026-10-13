@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sebastian Quintana Warsop | Web &amp; Application Developer</title>
-    <meta name="description" content="I'm Seb, an aspiring web developer with a background in C# and IT support. Here's a bit about me and some of my work.">
-    <meta property="og:title" content="Sebastian Quintana Warsop">
-    <meta property="og:description" content="An aspiring web developer with a background in C# and IT support.">
+    <title>Sebastian Quintana Warsop | IT Support Engineer</title>
+    <meta name="description" content="Tier 2 IT Support Engineer at an MSP, working across Microsoft 365, Entra ID, Intune, security tooling, networking and PowerShell. UK, remote.">
+    <meta property="og:title" content="Sebastian Quintana Warsop | IT Support Engineer">
+    <meta property="og:description" content="Tier 2 IT Support Engineer: Microsoft 365, Entra ID, Intune, security and PowerShell.">
     <meta property="og:image" content="images/seb.webp">
-    <meta name="theme-color" content="#001579">
+    <meta name="theme-color" content="#0b1640">
     <link rel="icon" href="favicon.ico?v=2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=La+Belle+Aurore&family=Roboto:wght@400;500;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="CSS/styles.css">
 </head>
 
@@ -24,9 +24,10 @@
         <div class="wrap">
             <a class="logo" href="index.html">Seb.</a>
             <ul class="nav-links">
-                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
                 <li><a href="#skills">Skills</a></li>
-                <li><a href="project.html">Projects</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
@@ -34,65 +35,242 @@
 
     <header class="hero">
         <img class="moon" src="images/moon.webp" alt="" width="400" height="400">
-        <img class="cloud cloud--top" src="images/cloud.webp" alt="" width="320" height="207">
-        <h1>I'm Seb</h1>
-        <p class="tagline">an aspiring web <span>dev.</span></p>
-        <img class="cloud cloud--bottom" src="images/cloud.webp" alt="" width="320" height="207">
+        <div class="wrap hero-grid">
+            <div>
+                <p class="status">UK · Remote</p>
+                <h1><span class="hi">Hi, I'm Seb</span>Sebastian Quintana Warsop</h1>
+                <p class="role">Tier 2 IT Support Engineer · Microsoft 365 &amp; Security</p>
+                <p class="pitch">I keep businesses running at a managed service provider: looking after users, devices and Microsoft 365 tenants for clients across multiple industries, and fixing the problems that land after first-line support.</p>
+                <div class="hero-actions">
+                    <a class="btn" href="#contact">Get in touch</a>
+                    <a class="btn btn--ghost" href="#experience">See my experience</a>
+                    <a class="btn btn--ghost" href="https://uk.linkedin.com/in/seb-qw-b14b28365" target="_blank" rel="noopener">LinkedIn</a>
+                </div>
+            </div>
+
+            <div class="terminal" aria-label="A PowerShell window summarising Seb's profile">
+                <div class="terminal-bar" aria-hidden="true"><span></span><span></span><span></span><b>PowerShell</b></div>
+<pre aria-hidden="true"><span class="t-prompt">PS&gt;</span> <span class="t-cmd">Get-Engineer</span> <span class="t-param">-Name</span> Seb
+
+<span class="t-key">Role       :</span> Tier 2 IT Support Engineer
+<span class="t-key">Employer   :</span> PCS Business Systems (MSP)
+<span class="t-key">Experience :</span> 3 years, multi-industry
+<span class="t-key">Stack      :</span> {M365, Entra ID, Intune,
+               Exchange Online, PowerShell}
+<span class="t-key">Security   :</span> {SentinelOne, Darktrace,
+               Duo, Purview}
+<span class="t-key">Certs      :</span> {MS-900}
+<span class="t-key">Learning   :</span> MS-102
+<span class="t-key">Location   :</span> UK, Remote
+
+<span class="t-prompt">PS&gt;</span> <span class="t-cursor"></span></pre>
+            </div>
+        </div>
         <img class="mountain" src="images/mountain.webp" alt="" width="2000" height="900">
     </header>
+
+    <div class="wrap highlights">
+        <ul>
+            <li><strong>3 years</strong><span>supporting end users</span></li>
+            <li><strong>Tier 2</strong><span>escalation-level support at an MSP</span></li>
+            <li><strong>Multi-industry</strong><span>client base</span></li>
+            <li><strong>MS-900</strong><span>Microsoft 365 certified</span></li>
+        </ul>
+    </div>
 
     <main id="main">
         <section id="about">
             <div class="wrap about">
-                <img class="profile-pic" src="images/seb.webp" alt="Photo of Seb smiling, sitting at a table" width="640" height="640">
-                <div>
-                    <h2>Hello.</h2>
-                    <p>Welcome to my website! I'm a developer who loves building things, learning new tools and helping people get technology working for them. Here are a few things about me.</p>
-                    <p class="signature">Seb.</p>
+                <img class="profile-pic" src="images/seb.webp" alt="Photo of Seb smiling" width="640" height="640">
+                <div class="about-text">
+                    <p class="eyebrow">About me</p>
+                    <h2>From the family Windows 98 PC to an MSP helpdesk.</h2>
+                    <p>I've been hands-on with computers since I was young, studied Computer Science at GCSE, and went straight into an IT apprenticeship after school. Today I work at Tier 2 for a managed service provider, where I handle Microsoft 365, identity, devices, security tools and networking for businesses of all kinds.</p>
+                    <p>I like getting to the root of a problem, and I use PowerShell and my development background to make repeat jobs faster.</p>
+                    <p class="quote">My favourite thing to hear from a user:<q>Thanks! That worked.</q></p>
                 </div>
             </div>
         </section>
 
-        <hr class="dots">
+        <section id="experience" class="section--alt">
+            <div class="wrap">
+                <div class="section-head">
+                    <p class="eyebrow">Experience</p>
+                    <h2>Where I've worked</h2>
+                </div>
+
+                <ol class="timeline">
+                    <li class="job job--current">
+                        <div class="job-when"><span class="now">● Current</span><br>Fully remote</div>
+                        <div>
+                            <h3>Tier 2 IT Support Engineer</h3>
+                            <p class="org">PCS Business Systems · Managed Service Provider</p>
+                            <ul>
+                                <li>Take escalations from first-line support and resolve technical issues for end users across multiple client businesses and industries.</li>
+                                <li>Administer Microsoft 365: Exchange Online mailboxes, SharePoint, licensing, and data protection with Microsoft Purview.</li>
+                                <li>Manage users, groups and devices in Active Directory, Entra ID, Intune and Group Policy.</li>
+                                <li>Monitor, patch and remotely manage client endpoints with N-sight RMM.</li>
+                                <li>Support security tooling, including SentinelOne endpoint protection, Darktrace threat detection, and MFA with Cisco Duo and WatchGuard AuthPoint.</li>
+                                <li>Troubleshoot network and connectivity issues for remote and on-site users.</li>
+                                <li>Use PowerShell to investigate issues and speed up admin tasks.</li>
+                            </ul>
+                            <ul class="chips" aria-label="Tools used">
+                                <li>Microsoft 365</li><li>Entra ID</li><li>Intune</li><li>Exchange Online</li><li>Active Directory</li><li>Group Policy</li><li>N-sight RMM</li><li>SentinelOne</li><li>Darktrace</li><li>Cisco Duo</li><li>PowerShell</li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="job">
+                        <div class="job-when">Previous role</div>
+                        <div>
+                            <h3>Access control company</h3>
+                            <p class="org">Before joining the MSP</p>
+                            <p>Worked in the access control industry before moving into managed services.</p>
+                        </div>
+                    </li>
+
+                    <li class="job">
+                        <div class="job-when">Apprenticeship</div>
+                        <div>
+                            <h3>IT Apprentice</h3>
+                            <p class="org">IT Application Specialist &amp; IT Solutions Technician</p>
+                            <p>Completed both qualifications and learned C#. For my apprenticeship project I designed, built and tested <a href="project.html">FOV CRM</a>, a Windows Forms client management app, working from a brief.</p>
+                        </div>
+                    </li>
+
+                    <li class="job">
+                        <div class="job-when">School</div>
+                        <div>
+                            <h3>GCSE Computer Science</h3>
+                            <p class="org">Education</p>
+                            <p>Started programming in Python and Small Basic.</p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </section>
 
         <section id="skills">
             <div class="wrap">
                 <div class="section-head">
-                    <h2>My Skills.</h2>
+                    <p class="eyebrow">Skills</p>
+                    <h2>What I work with every day</h2>
                 </div>
 
                 <div class="skills-grid">
-                    <article class="card">
-                        <img class="card-icon" src="images/coding.gif" alt="" width="84" height="84">
-                        <h3>Web &amp; Application Developer</h3>
-                        <p>I love to create things and learn new things about coding!</p>
-                        <p>After learning C# during my apprenticeship, I've embarked on my web development journey, trying my hand at web languages, as you can see from this website.</p>
-                        <a class="btn" href="project.html">See some of my work</a>
+                    <article class="skill-group">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>Microsoft 365</h3>
+                        <p>Tenant administration, mailboxes, sharing and compliance.</p>
+                        <ul class="chips"><li>Exchange Online</li><li>SharePoint</li><li>Purview</li><li>Licensing</li></ul>
                     </article>
 
-                    <article class="card">
-                        <img class="card-icon" src="images/software.webp" alt="" width="84" height="84">
-                        <h3>Software Support</h3>
-                        <p>I began using computers at a young age, starting with the family Windows 98 PC and then Windows XP, and spent many hours on Newgrounds and similar Flash websites.</p>
-                        <p>ICT piqued my interest in primary school, and I studied Computer Science at GCSE, where I began programming in languages like Python and Small Basic.</p>
-                        <p>After leaving school I started an IT apprenticeship, completing the IT Application Specialist and IT Solutions Technician qualifications.</p>
+                    <article class="skill-group">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Identity &amp; Access</h3>
+                        <p>Users, groups, permissions and sign-in for hybrid and cloud setups.</p>
+                        <ul class="chips"><li>Active Directory</li><li>Entra ID</li><li>Group Policy</li><li>MFA</li></ul>
+                    </article>
+
+                    <article class="skill-group">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Devices &amp; RMM</h3>
+                        <p>Managing, patching and monitoring endpoints across many clients.</p>
+                        <ul class="chips"><li>Intune</li><li>N-sight RMM</li><li>Windows</li></ul>
+                    </article>
+
+                    <article class="skill-group">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>Security</h3>
+                        <p>Endpoint protection, threat detection, MFA and data protection tools.</p>
+                        <ul class="chips"><li>SentinelOne</li><li>Darktrace</li><li>Cisco Duo</li><li>WatchGuard AuthPoint</li><li>Purview</li></ul>
+                    </article>
+
+                    <article class="skill-group">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v5M12 12l-6 5.5M12 12l6 5.5"/></svg>Networking</h3>
+                        <p>Diagnosing connectivity problems for remote and office users.</p>
+                        <ul class="chips"><li>Troubleshooting</li><li>Remote support</li></ul>
+                    </article>
+
+                    <article class="skill-group">
+                        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17l6-5-6-5M12 19h8"/></svg>Scripting &amp; Code</h3>
+                        <p>Automating admin work and building small tools.</p>
+                        <ul class="chips"><li>PowerShell</li><li>C#</li><li>HTML/CSS/JS</li><li>Python</li></ul>
                     </article>
                 </div>
+            </div>
+        </section>
 
-                <p class="quote">
-                    I love helping people and solving problems. My favourite phrase to hear is:
-                    <q>Thanks! That worked.</q>
-                </p>
+        <section id="certifications" class="section--alt">
+            <div class="wrap">
+                <div class="section-head">
+                    <p class="eyebrow">Certifications</p>
+                    <h2>Qualifications</h2>
+                </div>
+
+                <ul class="certs">
+                    <li class="cert">
+                        <span class="badge">Achieved</span>
+                        <h3>Microsoft 365 Certified: Fundamentals</h3>
+                        <p>MS-900 · Microsoft</p>
+                    </li>
+                    <li class="cert">
+                        <span class="badge badge--progress">In progress</span>
+                        <h3>Microsoft 365 Certified: Administrator</h3>
+                        <p>MS-102 · Microsoft</p>
+                    </li>
+                    <li class="cert">
+                        <span class="badge">Achieved</span>
+                        <h3>IT Application Specialist</h3>
+                        <p>Apprenticeship qualification</p>
+                    </li>
+                    <li class="cert">
+                        <span class="badge">Achieved</span>
+                        <h3>IT Solutions Technician</h3>
+                        <p>Apprenticeship qualification</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="wrap">
+                <div class="section-head">
+                    <p class="eyebrow">Projects</p>
+                    <h2>Things I've built</h2>
+                </div>
+
+                <div class="projects">
+                    <article class="project">
+                        <img src="images/project-2.webp" alt="FOV CRM's Client Activity screen" width="1326" height="828" loading="lazy">
+                        <div class="project-body">
+                            <h3>FOV CRM</h3>
+                            <p>A C# Windows Forms app for managing clients, tracking risk and status, built from a brief during my apprenticeship.</p>
+                            <ul class="chips"><li>C#</li><li>Windows Forms</li><li>Database</li></ul>
+                            <a class="link" href="project.html">View the project →</a>
+                        </div>
+                    </article>
+
+                    <article class="project">
+                        <img src="images/site-preview.webp" alt="The home page of this website" width="1200" height="675" loading="lazy">
+                        <div class="project-body">
+                            <h3>This website</h3>
+                            <p>My personal site and CV, built with HTML, CSS and JavaScript. Responsive, accessible, supports dark mode, and the whole thing loads in well under 1 MB.</p>
+                            <ul class="chips"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>GitHub</li></ul>
+                            <a class="link" href="https://github.com/sebqw/webdevjourney" target="_blank" rel="noopener">View the code on GitHub →</a>
+                        </div>
+                    </article>
+                </div>
             </div>
         </section>
 
         <section id="contact" class="contact">
             <div class="wrap">
-                <h2>Get In Touch</h2>
-                <p>That's a bit about me. Now tell me about you! Send me an email or find me on X (Twitter) 😁</p>
+                <p class="eyebrow">Contact</p>
+                <h2>Let's talk</h2>
+                <p>Whether it's a role, a question or a problem you'd like a hand with, drop me an email.</p>
+                <a class="email" href="mailto:sbrqw01@gmail.com">sbrqw01@gmail.com</a>
                 <div class="button-row">
-                    <a class="btn" href="mailto:sebastianquintanawarsop@gmail.com">Email me</a>
-                    <a class="btn btn--ghost" href="https://twitter.com/qwbes" target="_blank" rel="noopener">@qwbes on X</a>
+                    <a class="btn" href="mailto:sbrqw01@gmail.com">Email me</a>
+                    <a class="btn btn--ghost" href="https://uk.linkedin.com/in/seb-qw-b14b28365" target="_blank" rel="noopener">LinkedIn</a>
+                    <a class="btn btn--ghost" href="https://github.com/sebqw" target="_blank" rel="noopener">GitHub</a>
+                    <a class="btn btn--ghost" href="https://twitter.com/qwbes" target="_blank" rel="noopener">X / Twitter</a>
                 </div>
             </div>
         </section>
@@ -101,6 +279,7 @@
     <footer class="site-footer">
         <div class="wrap">
             <p>© <span id="year">2026</span> Sebastian Quintana Warsop</p>
+            <p><a href="#main">Back to top ↑</a></p>
         </div>
     </footer>
 
