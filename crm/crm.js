@@ -291,6 +291,7 @@
         $('#dialog-title').textContent = client ? fullName(client) : 'Add client';
         $('#save-client').textContent = client ? 'Save changes' : 'Add client';
         $('#delete-client').hidden = !client;
+        $('#clear-form').hidden = !!client;
         $('#history').hidden = !client;
 
         if (client) {
@@ -329,24 +330,32 @@
 
     // ---------- Validation ----------
 
-    // UK mobile: 07xxx xxxxxx or +44 7xxx xxxxxx
-    function normaliseMobile(value) {
-        const digits = value.replace(/[\s()-]/g, '');
-        const m = digits.match(/^(?:\+44|0)(7\d{9})$/);
-        if (!m) return null;
-        const n = '0' + m[1];
-        return n.slice(0, 5) + ' ' + n.slice(5);
+    // Any UK phone number: mobiles and landlines, written as 0..., +44... or
+    // 44..., and 10-digit numbers where Excel has dropped the leading 0
+    // (which is how every number in the agency's spreadsheet is stored).
+    function normalisePhone(value) {
+        let d = String(value).replace(/[\s().-]/g, '');
+        if (/^\+44\d{10}$/.test(d)) d = '0' + d.slice(3);
+        else if (/^44\d{10}$/.test(d)) d = '0' + d.slice(2);
+        else if (/^[1-9]\d{9}$/.test(d)) d = '0' + d;
+        if (!/^0[1-9]\d{9}$/.test(d)) return null;
+        // Group digits the way UK numbers are usually written
+        if (d[1] === '2') return d.slice(0, 3) + ' ' + d.slice(3, 7) + ' ' + d.slice(7);   // 020 7946 0123
+        if (/^01\d1|^011|^0[389]/.test(d)) return d.slice(0, 4) + ' ' + d.slice(4, 7) + ' ' + d.slice(7); // 0116 496 0123, 0800 123 4567
+        return d.slice(0, 5) + ' ' + d.slice(5);                                             // 07700 900123, 01536 123456
     }
 
-    function validate() {
+    // The same rules apply to the form and to imported spreadsheets.
+    // takenEmails holds emails already in use by other clients.
+    function checkClient(raw, takenEmails) {
         const data = {
-            firstName: field('firstName').value.trim(),
-            lastName: field('lastName').value.trim(),
-            email: field('email').value.trim().toLowerCase(),
-            mobile: field('mobile').value.trim(),
-            company: field('company').value.trim(),
-            risk: field('risk').value,
-            status: field('status').value
+            firstName: String(raw.firstName || '').trim(),
+            lastName: String(raw.lastName || '').trim(),
+            email: String(raw.email || '').trim().toLowerCase(),
+            mobile: String(raw.mobile || '').trim(),
+            company: String(raw.company || '').trim(),
+            risk: String(raw.risk || '').trim().toLowerCase(),
+            status: String(raw.status || '').trim().toLowerCase()
         };
         const errors = {};
 
@@ -358,23 +367,37 @@
             errors.email = 'Enter an email address.';
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
             errors.email = 'That doesn\'t look like an email address.';
-        } else if (clients.some(function (c) { return c.email === data.email && c !== editing; })) {
+        } else if (takenEmails.has(data.email)) {
             errors.email = 'Another client already uses this email.';
         }
 
-        const mobile = normaliseMobile(data.mobile);
+        const phone = normalisePhone(data.mobile);
         if (!data.mobile) {
-            errors.mobile = 'Enter a mobile number.';
-        } else if (!mobile) {
-            errors.mobile = 'Use a UK mobile, e.g. 07700 900123.';
+            errors.mobile = 'Enter a phone number.';
+        } else if (!phone) {
+            errors.mobile = 'Use a UK number, e.g. 07700 900123 or 0116 496 0123.';
         } else {
-            data.mobile = mobile;
+            data.mobile = phone;
         }
 
-        if (!RISKS[data.risk]) data.risk = 'green';
-        if (!STATUSES[data.status]) data.status = 'active';
+        if (!RISKS[data.risk]) errors.risk = 'Risk must be Green, Orange or Red.';
+        if (!STATUSES[data.status]) errors.status = 'Status must be Active or Inactive.';
 
         return { data: data, errors: errors };
+    }
+
+    function validate() {
+        const taken = new Set(clients.filter(function (c) { return c !== editing; })
+            .map(function (c) { return c.email; }));
+        return checkClient({
+            firstName: field('firstName').value,
+            lastName: field('lastName').value,
+            email: field('email').value,
+            mobile: field('mobile').value,
+            company: field('company').value,
+            risk: field('risk').value,
+            status: field('status').value
+        }, taken);
     }
 
     function clearErrors() {
@@ -385,6 +408,7 @@
     function showErrors(errors) {
         clearErrors();
         Object.keys(errors).forEach(function (k) {
+            if (!$('#e-' + k)) return;
             $('#e-' + k).textContent = errors[k];
             field(k).setAttribute('aria-invalid', 'true');
             field(k).setAttribute('aria-describedby', 'e-' + k);
@@ -506,6 +530,267 @@
     });
 
     $('#add-client').addEventListener('click', function () { openDialog(null); });
+
+    // Clear wipes the add-client form without closing it
+    $('#clear-form').addEventListener('click', function () {
+        form.reset();
+        clearErrors();
+        if (window.matchMedia('(pointer: fine)').matches) field('firstName').focus();
+    });
+
+    // ---------- Import a spreadsheet ----------
+    //
+    // Accepts the agency's original Excel sheet (one row per client) or the
+    // three-table version from my database design (ClientName, ClientInfo,
+    // ClientActivity joined on client_id). CSV files work too.
+
+    // ----- A small .xlsx reader -----
+    // An .xlsx file is a zip of XML files. The browser can unzip it natively
+    // (DecompressionStream), so no third-party library is needed.
+
+    async function unzip(buffer) {
+        const view = new DataView(buffer);
+        const bytes = new Uint8Array(buffer);
+        const decoder = new TextDecoder();
+
+        // Find the zip's table of contents (it sits at the end of the file)
+        let end = -1;
+        for (let i = buffer.byteLength - 22; i >= Math.max(0, buffer.byteLength - 66000); i--) {
+            if (view.getUint32(i, true) === 0x06054b50) { end = i; break; }
+        }
+        if (end < 0) throw new Error('Not a zip file');
+
+        const files = {};
+        let p = view.getUint32(end + 16, true);
+        const count = view.getUint16(end + 10, true);
+        for (let n = 0; n < count; n++) {
+            if (view.getUint32(p, true) !== 0x02014b50) throw new Error('Bad zip entry');
+            const method = view.getUint16(p + 10, true);
+            const size = view.getUint32(p + 20, true);
+            const nameLen = view.getUint16(p + 28, true);
+            const extraLen = view.getUint16(p + 30, true);
+            const commentLen = view.getUint16(p + 32, true);
+            const local = view.getUint32(p + 42, true);
+            const name = decoder.decode(bytes.subarray(p + 46, p + 46 + nameLen));
+            const start = local + 30 + view.getUint16(local + 26, true) + view.getUint16(local + 28, true);
+            files[name] = { method: method, data: bytes.subarray(start, start + size) };
+            p += 46 + nameLen + extraLen + commentLen;
+        }
+
+        return async function read(name) {
+            const f = files[name];
+            if (!f) return null;
+            if (f.method === 0) return decoder.decode(f.data);
+            if (f.method !== 8) throw new Error('Unsupported compression');
+            const stream = new Blob([f.data]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+            return new Response(stream).text();
+        };
+    }
+
+    function xml(text) {
+        return new DOMParser().parseFromString(text, 'application/xml');
+    }
+
+    function columnIndex(ref) {
+        let n = 0;
+        for (const ch of ref.replace(/\d+/g, '')) n = n * 26 + ch.charCodeAt(0) - 64;
+        return n - 1;
+    }
+
+    // Turns each sheet into a list of rows keyed by the first row's headings
+    async function readXlsx(buffer) {
+        const read = await unzip(buffer);
+        const shared = [];
+        const ss = await read('xl/sharedStrings.xml');
+        if (ss) {
+            Array.from(xml(ss).getElementsByTagName('si')).forEach(function (si) {
+                shared.push(Array.from(si.getElementsByTagName('t')).map(function (t) { return t.textContent; }).join(''));
+            });
+        }
+
+        const rels = {};
+        Array.from(xml(await read('xl/_rels/workbook.xml.rels')).getElementsByTagName('Relationship')).forEach(function (r) {
+            const target = r.getAttribute('Target').replace(/^\/?(xl\/)?/, '');
+            rels[r.getAttribute('Id')] = 'xl/' + target;
+        });
+
+        const sheets = Array.from(xml(await read('xl/workbook.xml')).getElementsByTagName('sheet'));
+        const result = [];
+        for (const sheet of sheets) {
+            const text = await read(rels[sheet.getAttribute('r:id')]);
+            if (!text) continue;
+            const grid = Array.from(xml(text).getElementsByTagName('row')).map(function (row) {
+                const cells = [];
+                Array.from(row.getElementsByTagName('c')).forEach(function (c) {
+                    const type = c.getAttribute('t');
+                    const v = c.getElementsByTagName('v')[0];
+                    let value = '';
+                    if (type === 's' && v) value = shared[+v.textContent];
+                    else if (type === 'inlineStr') value = Array.from(c.getElementsByTagName('t')).map(function (t) { return t.textContent; }).join('');
+                    else if (v) value = v.textContent;
+                    // Excel can store long numbers as 7.624716204E9
+                    if (type !== 's' && type !== 'inlineStr' && type !== 'str' && /e/i.test(value) && !isNaN(value)) {
+                        value = String(Number(value));
+                    }
+                    cells[columnIndex(c.getAttribute('r'))] = value;
+                });
+                return cells;
+            });
+            result.push(gridToRows(grid));
+        }
+        return result;
+    }
+
+    function gridToRows(grid) {
+        if (!grid.length) return [];
+        const headings = Array.from(grid[0], function (h) { return String(h || '').trim(); });
+        return grid.slice(1).map(function (cells) {
+            const row = {};
+            headings.forEach(function (h, i) { if (h) row[h] = cells[i] == null ? '' : cells[i]; });
+            return row;
+        }).filter(function (row) {
+            return Object.values(row).some(function (v) { return String(v).trim() !== ''; });
+        });
+    }
+
+    // Handles quoted values, commas inside quotes and Windows line endings
+    function readCsv(text) {
+        const grid = [];
+        let row = [], cell = '', quoted = false;
+        text = text.replace(/^﻿/, '');
+        for (let i = 0; i < text.length; i++) {
+            const ch = text[i];
+            if (quoted) {
+                if (ch === '"' && text[i + 1] === '"') { cell += '"'; i++; }
+                else if (ch === '"') quoted = false;
+                else cell += ch;
+            } else if (ch === '"') quoted = true;
+            else if (ch === ',') { row.push(cell); cell = ''; }
+            else if (ch === '\n' || ch === '\r') {
+                if (ch === '\r' && text[i + 1] === '\n') i++;
+                row.push(cell); grid.push(row); row = []; cell = '';
+            } else cell += ch;
+        }
+        if (cell !== '' || row.length) { row.push(cell); grid.push(row); }
+        return [gridToRows(grid)];
+    }
+
+    // Column headings people actually use, mapped to the CRM's fields
+    const HEADINGS = {
+        clientid: 'id', id: 'id',
+        firstname: 'firstName', forename: 'firstName', first: 'firstName',
+        lastname: 'lastName', surname: 'lastName', last: 'lastName',
+        email: 'email', emailaddress: 'email',
+        contact: 'mobile', mobile: 'mobile', phone: 'mobile', telephone: 'mobile',
+        phonenumber: 'mobile', contactnumber: 'mobile', mobilenumber: 'mobile',
+        company: 'company', companyname: 'company',
+        risk: 'risk', status: 'status'
+    };
+
+    function tidyRow(row) {
+        const out = {};
+        Object.keys(row).forEach(function (key) {
+            const name = HEADINGS[key.toLowerCase().replace(/[^a-z]/g, '')];
+            if (name) out[name] = row[key];
+        });
+        return out;
+    }
+
+    // Rows that share a client_id across sheets are one client
+    function mergeSheets(sheets) {
+        const byId = new Map();
+        const plain = [];
+        sheets.forEach(function (rows) {
+            rows.forEach(function (row) {
+                const r = tidyRow(row);
+                if (!Object.keys(r).length) return;
+                if (r.id !== undefined && String(r.id).trim() !== '') {
+                    const key = String(r.id).trim();
+                    byId.set(key, Object.assign(byId.get(key) || {}, r));
+                } else {
+                    plain.push(r);
+                }
+            });
+        });
+        return Array.from(byId.values()).concat(plain);
+    }
+
+    function importRows(rows) {
+        const before = clients.slice();
+        const taken = new Set(clients.map(function (c) { return c.email; }));
+        const now = new Date().toISOString();
+        let nextId = clients.reduce(function (max, c) { return Math.max(max, c.id); }, 0) + 1;
+        let added = 0, duplicates = 0, invalid = 0;
+        const problems = [];
+
+        rows.forEach(function (raw, i) {
+            const result = checkClient(raw, taken);
+            const keys = Object.keys(result.errors);
+            if (keys.length === 1 && keys[0] === 'email' && taken.has(result.data.email)) {
+                duplicates++;
+                return;
+            }
+            if (keys.length) {
+                invalid++;
+                if (problems.length < 5) problems.push('Row ' + (i + 2) + ': ' + result.errors[keys[0]]);
+                return;
+            }
+            taken.add(result.data.email);
+            clients.push(Object.assign({
+                id: nextId++, created: now, updated: now,
+                notes: [{ at: now, text: 'Imported from spreadsheet.' }]
+            }, result.data));
+            added++;
+        });
+
+        save();
+        render();
+
+        let message = 'Imported ' + added.toLocaleString('en-GB') + ' client' + (added === 1 ? '' : 's');
+        const skipped = [];
+        if (duplicates) skipped.push(duplicates + ' already in the CRM');
+        if (invalid) skipped.push(invalid + ' with problems');
+        if (skipped.length) message += '. Skipped ' + skipped.join(' and ');
+        if (problems.length) console.info('Import problems:\n' + problems.join('\n'));
+
+        toast(message + '.', added ? function () {
+            clients = before;
+            save();
+            render();
+            toast('Import undone');
+        } : null);
+    }
+
+    const importBtn = $('#import-btn');
+    const importFile = $('#import-file');
+
+    importBtn.addEventListener('click', function () { importFile.click(); });
+
+    importFile.addEventListener('change', function () {
+        const file = importFile.files[0];
+        importFile.value = ''; // lets the same file be picked again
+        if (!file) return;
+
+        importBtn.disabled = true;
+        importBtn.textContent = 'Importing...';
+        const isCsv = /\.csv$/i.test(file.name);
+        (isCsv ? file.text().then(readCsv) : file.arrayBuffer().then(readXlsx))
+            .then(function (sheets) {
+                const rows = mergeSheets(sheets);
+                if (!rows.length) {
+                    toast('No clients found. Check the file has headings like first_name, email and company.');
+                    return;
+                }
+                importRows(rows);
+            })
+            .catch(function () {
+                toast('That file couldn\'t be read. Use an Excel (.xlsx) or CSV file.');
+            })
+            .then(function () {
+                importBtn.disabled = false;
+                importBtn.textContent = 'Import spreadsheet';
+            });
+    });
 
     // ---------- Export and reset ----------
 

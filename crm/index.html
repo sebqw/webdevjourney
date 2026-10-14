@@ -46,7 +46,7 @@
                 <div>
                     <p class="eyebrow">Live demo · <a href="../project.html">About this project</a></p>
                     <h1>FOV CRM <span class="ver">2.0</span></h1>
-                    <p class="crm-sub">Client management for a recruitment agency. Try it: add, search, edit and delete clients. Changes are saved in your browser only.</p>
+                    <p class="crm-sub">Client management for a recruitment agency. Try it: add, search, edit and delete clients, or import a spreadsheet of contacts. Changes are saved in your browser only.</p>
                 </div>
                 <div class="crm-actions">
                     <button class="btn" type="button" id="add-client">
@@ -54,6 +54,8 @@
                         Add client
                     </button>
                     <button class="btn btn--outline" type="button" id="export-csv">Export CSV</button>
+                    <button class="btn btn--outline" type="button" id="import-btn">Import spreadsheet</button>
+                    <input type="file" id="import-file" accept=".xlsx,.csv" hidden>
                     <button class="btn btn--outline" type="button" id="reset-demo">Reset demo</button>
                 </div>
             </header>
@@ -94,7 +96,7 @@
                         <tr>
                             <th scope="col"><button type="button" data-sort="name">Client</button></th>
                             <th scope="col"><button type="button" data-sort="company">Company</button></th>
-                            <th scope="col"><button type="button" data-sort="mobile">Mobile</button></th>
+                            <th scope="col"><button type="button" data-sort="mobile">Phone</button></th>
                             <th scope="col"><button type="button" data-sort="risk">Risk</button></th>
                             <th scope="col"><button type="button" data-sort="status">Status</button></th>
                             <th scope="col" aria-sort="descending"><button type="button" data-sort="updated">Updated</button></th>
@@ -147,7 +149,7 @@
                             <p class="error" id="e-email"></p>
                         </div>
                         <div class="field">
-                            <label for="f-mobile">Mobile</label>
+                            <label for="f-mobile">Phone</label>
                             <input id="f-mobile" name="mobile" type="tel" inputmode="tel" autocomplete="off" required placeholder="07700 900123">
                             <p class="error" id="e-mobile"></p>
                         </div>
@@ -194,6 +196,7 @@
             <footer class="dialog-foot">
                 <button class="btn btn--danger" type="button" id="delete-client" hidden>Delete</button>
                 <span class="spacer"></span>
+                <button class="btn btn--outline" type="button" id="clear-form" hidden>Clear</button>
                 <button class="btn btn--outline" type="button" data-close>Cancel</button>
                 <button class="btn" type="submit" id="save-client">Save client</button>
             </footer>
