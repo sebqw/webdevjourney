@@ -1396,3 +1396,172 @@ section {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Packet Muncher arcade ---------- */
+
+.arcade {
+  max-width: 30rem;
+  margin-inline: auto;
+  padding: 1rem;
+  border-radius: 22px;
+  background: linear-gradient(160deg, var(--night-2), var(--night));
+  box-shadow: 0 25px 60px var(--shadow), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.arcade-hud {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-family: var(--mono);
+  text-align: center;
+}
+
+.arcade-hud span {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8ea3c0;
+}
+
+.arcade-hud strong {
+  font-size: 1.15rem;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.arcade-hud .lives {
+  color: #facc15;
+  letter-spacing: 0.15em;
+}
+
+.arcade-screen {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #070d26;
+  box-shadow: inset 0 0 0 2px rgba(102, 191, 191, 0.25);
+}
+
+#game {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 19 / 21;
+  touch-action: none;
+}
+
+#game:focus-visible {
+  outline: 3px solid var(--teal-soft);
+  outline-offset: -3px;
+}
+
+.arcade-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  color: #c9d8e2;
+  background: rgba(7, 13, 38, 0.82);
+  backdrop-filter: blur(2px);
+}
+
+.arcade-overlay[hidden] {
+  display: none;
+}
+
+.arcade-overlay p {
+  margin: 0;
+  max-width: 18rem;
+  font-size: 0.95rem;
+}
+
+.arcade-overlay .btn {
+  margin-top: 0.75rem;
+  border: 0;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.arcade-title {
+  font-family: var(--display);
+  font-size: 2rem !important;
+  font-weight: 700;
+  color: #facc15;
+  text-shadow: 0 0 18px rgba(250, 204, 21, 0.45);
+}
+
+.arcade-help {
+  margin: 0.85rem 0 0;
+  text-align: center;
+  font-size: 0.82rem;
+  color: #8ea3c0;
+}
+
+kbd {
+  display: inline-block;
+  min-width: 1.5em;
+  margin: 0 1px;
+  padding: 0.05em 0.35em;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom-width: 2px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: #d5e6f0;
+}
+
+/* Direction pad: only shown on touch screens */
+.dpad {
+  display: none;
+  grid-template-columns: repeat(3, 3.6rem);
+  grid-template-rows: repeat(3, 3.2rem);
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 0.9rem;
+}
+
+.dpad button {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.07);
+  color: #d5e6f0;
+  font-size: 1.1rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.dpad button:active {
+  background: var(--teal-soft);
+  color: #062a2c;
+}
+
+.dpad [data-dir="up"]    { grid-area: 1 / 2; }
+.dpad [data-dir="left"]  { grid-area: 2 / 1; }
+.dpad [data-dir="right"] { grid-area: 2 / 3; }
+.dpad [data-dir="down"]  { grid-area: 3 / 2; }
+
+@media (pointer: coarse) {
+  .dpad { display: grid; }
+  .arcade-help { display: none; }
+}
+
+@media (max-width: 640px) {
+  .arcade {
+    padding: 0.75rem;
+    border-radius: 18px;
+  }
+}
+
+@media print {
+  #play { display: none; }
+}
