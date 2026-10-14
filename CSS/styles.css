@@ -1549,3 +1549,23 @@ kbd {
 @media print {
   #play { display: none; }
 }
+
+/* ---------- Job highlights ---------- */
+
+.highlights-label {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--teal);
+  margin: 1rem 0 0.4rem;
+}
+
+.job .job-highlights {
+  margin-bottom: 1rem;
+}
+
+.job .job-highlights li::marker {
+  content: "★  ";
+  color: var(--teal);
+}
