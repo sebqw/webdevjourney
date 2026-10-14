@@ -1575,3 +1575,51 @@ kbd {
   font-size: 0.92rem;
   color: var(--ink-soft);
 }
+
+/* ---------- Light mode: daytime sky in the header ----------
+   Dark mode keeps the night sky and moon (see below). */
+
+.hero {
+  /* Darker on the left behind the text, clear at the top right so the sun shows */
+  background:
+    linear-gradient(to right, rgba(5, 25, 70, 0.8) 0%, rgba(5, 25, 70, 0.55) 45%, rgba(5, 25, 70, 0.05) 100%),
+    linear-gradient(to bottom, transparent 55%, rgba(14, 60, 105, 0.6) 100%),
+    url("../images/sunshine.webp") right 70% / cover no-repeat,
+    #2f7fd0;
+}
+
+@media (max-width: 900px) {
+  /* Text runs full width on phones, so tint the whole sky evenly */
+  .hero {
+    background:
+      linear-gradient(to bottom, rgba(5, 25, 70, 0.45) 0%, rgba(5, 25, 70, 0.7) 40%, rgba(5, 25, 70, 0.7) 100%),
+      url("../images/sunshine.webp") 80% top / cover no-repeat,
+      #2f7fd0;
+  }
+}
+
+.moon {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .hero {
+    background:
+      radial-gradient(60rem 30rem at 85% -10%, rgba(102, 191, 191, 0.25), transparent 60%),
+      linear-gradient(to bottom, var(--night) 0%, var(--night-2) 60%, #1d4f7a 100%);
+  }
+
+  :root:not([data-theme="light"]) .moon {
+    display: block;
+  }
+}
+
+:root[data-theme="dark"] .hero {
+  background:
+    radial-gradient(60rem 30rem at 85% -10%, rgba(102, 191, 191, 0.25), transparent 60%),
+    linear-gradient(to bottom, var(--night) 0%, var(--night-2) 60%, #1d4f7a 100%);
+}
+
+:root[data-theme="dark"] .moon {
+  display: block;
+}
