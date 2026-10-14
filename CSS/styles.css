@@ -1366,3 +1366,33 @@ section {
     grid-template-columns: 1fr;
   }
 }
+
+.story-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.25rem 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.story-stats li {
+  padding: 1.1rem 1.25rem;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--night), var(--night-2));
+  color: #c9d8e2;
+  font-size: 0.92rem;
+}
+
+.story-stats strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 1.4rem;
+  color: var(--teal-soft);
+}
+
+@media (max-width: 640px) {
+  .story-stats {
+    grid-template-columns: 1fr;
+  }
+}
