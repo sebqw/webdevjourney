@@ -560,6 +560,7 @@ legend {
 }
 
 .choice label {
+  position: relative; /* keeps the hidden radio inside its label, so Safari doesn't scroll to it */
   margin: 0;
   font-weight: 400;
 }
@@ -685,7 +686,74 @@ legend {
   cursor: pointer;
 }
 
-/* ---------- Small screens: table rows become cards ---------- */
+/* ---------- Phone cards (hidden on larger screens) ---------- */
+
+.client-cards {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.client-cards li + li {
+  border-top: 1px solid var(--line);
+}
+
+.client-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 1rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.client-card:active {
+  background: color-mix(in srgb, var(--teal) 7%, transparent);
+}
+
+.client-card:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: -2px;
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.card-company {
+  font-weight: 500;
+}
+
+.card-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.card-updated {
+  margin-left: auto;
+  font-size: 0.82rem;
+}
+
+/* ---------- Small screens ---------- */
 
 @media (max-width: 760px) {
   .stats {
@@ -712,61 +780,13 @@ legend {
     padding-inline: 0.4rem;
   }
 
-  .clients thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
+  /* Swap the table for the button cards */
+  .clients {
+    display: none;
   }
 
-  .clients,
-  .clients tbody,
-  .clients tr,
-  .clients td {
+  .client-cards:not([hidden]) {
     display: block;
-  }
-
-  .clients tbody tr {
-    display: grid;
-    grid-template-columns: auto auto 1fr;
-    align-items: center;
-    gap: 0.4rem 0.5rem;
-    padding: 1rem;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .clients td {
-    padding: 0;
-    border: 0;
-  }
-
-  /* Name, company and phone each take a full line */
-  .clients .cell-client {
-    display: flex;
-    grid-column: 1 / -1;
-    margin-bottom: 0.25rem;
-  }
-
-  .clients td[data-label="Company"],
-  .clients td[data-label="Mobile"] {
-    grid-column: 1 / -1;
-  }
-
-  .clients td[data-label="Company"] {
-    font-weight: 500;
-  }
-
-  /* Risk and status side by side, last updated on the right */
-  .clients td[data-label="Risk"],
-  .clients td[data-label="Status"] {
-    margin-top: 0.35rem;
-  }
-
-  .clients td[data-label="Updated"] {
-    justify-self: end;
-    margin-top: 0.35rem;
-    font-size: 0.82rem;
   }
 
   .field-row {
@@ -783,13 +803,27 @@ legend {
     padding-inline: 0.5rem;
   }
 
+  /* Full-screen form on phones. Pinning it to the bottom put the Save
+     button under Safari's bottom address bar. */
   .client-dialog {
+    position: fixed;
+    inset: 0;
     width: 100%;
+    height: 100%;
     max-width: none;
-    max-height: 92%;
-    max-height: 92dvh; /* tracks the visible screen when the keyboard opens */
-    margin: auto 0 0;
-    border-radius: 18px 18px 0 0;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .client-dialog[open] {
+    animation: none;
+  }
+
+  .dialog-head {
+    padding-top: calc(1rem + env(safe-area-inset-top, 0px));
   }
 
   .dialog-foot {

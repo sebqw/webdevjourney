@@ -121,6 +121,43 @@
         return node;
     }
 
+    // ---------- Phone cards ----------
+
+    const cardsEl = $('#cards');
+
+    function riskPillFor(c) {
+        const pill = el('span', 'pill pill--' + c.risk);
+        pill.append(el('i', 'dot dot--' + c.risk), document.createTextNode(RISKS[c.risk]));
+        return pill;
+    }
+
+    function buildCard(c) {
+        const li = el('li');
+        const btn = el('button', 'client-card');
+        btn.type = 'button';
+        btn.dataset.id = c.id;
+        btn.setAttribute('aria-label', 'Edit ' + fullName(c) + ', ' + c.company);
+
+        const avatar = el('span', 'avatar avatar--' + c.risk, c.firstName[0] + c.lastName[0]);
+        avatar.setAttribute('aria-hidden', 'true');
+
+        const top = el('span', 'card-top');
+        const names = el('span', 'names');
+        names.append(el('strong', null, fullName(c)), el('span', 'muted', c.email));
+        top.append(avatar, names);
+
+        const meta = el('span', 'card-meta');
+        meta.append(el('span', 'card-company', c.company), el('span', 'mono muted', c.mobile));
+
+        const foot = el('span', 'card-foot');
+        foot.append(riskPillFor(c), el('span', 'pill pill--' + c.status, STATUSES[c.status]),
+            el('span', 'card-updated muted', relativeDate(c.updated)));
+
+        btn.append(top, meta, foot);
+        li.append(btn);
+        return li;
+    }
+
     // ---------- Render ----------
 
     function render() {
@@ -130,6 +167,10 @@
         });
 
         rowsEl.replaceChildren();
+        cardsEl.replaceChildren();
+        list.forEach(function (c) {
+            cardsEl.append(buildCard(c));
+        });
         list.forEach(function (c) {
             const tr = el('tr');
             tr.tabIndex = 0;
@@ -169,6 +210,7 @@
 
         $('#empty').hidden = list.length > 0;
         $('.clients').hidden = list.length === 0;
+        cardsEl.hidden = list.length === 0;
         $('#result-count').textContent = list.length === clients.length
             ? clients.length + ' clients'
             : 'Showing ' + list.length + ' of ' + clients.length + ' clients';
@@ -456,6 +498,11 @@
             e.preventDefault();
             openRow(tr);
         }
+    });
+
+    cardsEl.addEventListener('click', function (e) {
+        const card = e.target.closest('.client-card');
+        if (card) openRow(card);
     });
 
     $('#add-client').addEventListener('click', function () { openDialog(null); });
