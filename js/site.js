@@ -46,15 +46,27 @@
             if (reduceMotionQuery.matches) return;
             root.classList.add('theme-fading');
             clearTimeout(fadeTimer);
-            fadeTimer = setTimeout(function () { root.classList.remove('theme-fading'); }, 900);
+            fadeTimer = setTimeout(function () { root.classList.remove('theme-fading'); }, 1700);
+        }
+
+        function setTheme(next) {
+            root.dataset.theme = next;
+            try { localStorage.setItem('theme', next); } catch (e) {}
+            updateThemeLabel();
         }
 
         themeBtn.addEventListener('click', function () {
             const next = isDark() ? 'light' : 'dark';
-            fadeThemeChange();
-            root.dataset.theme = next;
-            try { localStorage.setItem('theme', next); } catch (e) {}
-            updateThemeLabel();
+            if (reduceMotionQuery.matches) {
+                setTheme(next);
+            } else if (document.startViewTransition) {
+                // Cross-fades the whole page, gradients and images included
+                document.startViewTransition(function () { setTheme(next); });
+            } else {
+                // Older browsers: fade the colours instead
+                fadeThemeChange();
+                setTheme(next);
+            }
         });
         prefersDark.addEventListener('change', function () { fadeThemeChange(); updateThemeLabel(); });
         updateThemeLabel();

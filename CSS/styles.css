@@ -1594,7 +1594,7 @@ kbd {
     url("../images/sunshine.webp") right 70% / cover no-repeat,
     #2f7fd0;
   opacity: 1;
-  transition: opacity 0.8s ease;
+  transition: opacity 1.5s ease-in-out;
 }
 
 @media (max-width: 900px) {
@@ -1609,7 +1609,7 @@ kbd {
 
 .moon {
   opacity: 0;
-  transition: opacity 0.8s ease;
+  transition: opacity 1.5s ease-in-out;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -1628,13 +1628,21 @@ html.theme-fading *,
 html.theme-fading *::before,
 html.theme-fading *::after {
   transition:
-    background-color 0.6s ease,
-    color 0.6s ease,
-    border-color 0.6s ease,
-    fill 0.6s ease,
-    stroke 0.6s ease,
-    box-shadow 0.6s ease,
-    opacity 0.8s ease !important;
+    background-color 1.5s ease-in-out,
+    color 1.5s ease-in-out,
+    border-color 1.5s ease-in-out,
+    fill 1.5s ease-in-out,
+    stroke 1.5s ease-in-out,
+    box-shadow 1.5s ease-in-out,
+    opacity 1.5s ease-in-out !important;
+}
+
+/* Browsers with page transitions cross-fade the whole page when the theme
+   changes. This sets how long that fade takes. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
