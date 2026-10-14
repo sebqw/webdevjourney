@@ -1569,3 +1569,9 @@ kbd {
   content: "★  ";
   color: var(--teal);
 }
+
+.job .job-prev {
+  margin: -0.5rem 0 0.9rem;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
