@@ -1649,3 +1649,12 @@ html.theme-fading *::after {
   .hero::after,
   .moon { transition: none; }
 }
+
+/* A skills card that spans the full row, for the main specialism */
+.skill-group--wide {
+  grid-column: 1 / -1;
+}
+
+.skill-group--wide p {
+  max-width: 48rem;
+}
