@@ -1397,10 +1397,10 @@ section {
   }
 }
 
-/* ---------- Packet Muncher arcade ---------- */
+/* ---------- Ping Pong arcade ---------- */
 
 .arcade {
-  max-width: 30rem;
+  max-width: 44rem;
   margin-inline: auto;
   padding: 1rem;
   border-radius: 22px;
@@ -1431,10 +1431,6 @@ section {
   font-variant-numeric: tabular-nums;
 }
 
-.arcade-hud .lives {
-  color: #facc15;
-  letter-spacing: 0.15em;
-}
 
 .arcade-screen {
   position: relative;
@@ -1448,7 +1444,7 @@ section {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 19 / 21;
+  aspect-ratio: 16 / 10;
   touch-action: none;
 }
 
@@ -1518,40 +1514,8 @@ kbd {
   color: #d5e6f0;
 }
 
-/* Direction pad: only shown on touch screens */
-.dpad {
-  display: none;
-  grid-template-columns: repeat(3, 3.6rem);
-  grid-template-rows: repeat(3, 3.2rem);
-  justify-content: center;
-  gap: 0.35rem;
-  margin-top: 0.9rem;
-}
-
-.dpad button {
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.07);
-  color: #d5e6f0;
-  font-size: 1.1rem;
-  cursor: pointer;
-  touch-action: manipulation;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-.dpad button:active {
-  background: var(--teal-soft);
-  color: #062a2c;
-}
-
-.dpad [data-dir="up"]    { grid-area: 1 / 2; }
-.dpad [data-dir="left"]  { grid-area: 2 / 1; }
-.dpad [data-dir="right"] { grid-area: 2 / 3; }
-.dpad [data-dir="down"]  { grid-area: 3 / 2; }
-
+/* Phones: the help text talks about touch instead */
 @media (pointer: coarse) {
-  .dpad { display: grid; }
   .arcade-help { display: none; }
 }
 
@@ -1559,6 +1523,26 @@ kbd {
   .arcade {
     padding: 0.75rem;
     border-radius: 18px;
+  }
+
+  /* The board is short on phones, so keep the overlay compact */
+  .arcade-overlay {
+    gap: 0.25rem;
+    padding: 0.75rem;
+  }
+
+  .arcade-title {
+    font-size: 1.35rem !important;
+  }
+
+  .arcade-overlay p {
+    font-size: 0.82rem;
+  }
+
+  .arcade-overlay .btn {
+    margin-top: 0.35rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
   }
 }
 

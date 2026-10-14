@@ -276,35 +276,28 @@
             <div class="wrap">
                 <div class="section-head">
                     <p class="eyebrow">Take a break</p>
-                    <h2>Packet Muncher</h2>
-                    <p>A little arcade game hidden in my CV. Munch every data packet, dodge the bugs, and grab a shield to squash them for bonus points.</p>
+                    <h2>Ping Pong</h2>
+                    <p>A little game hidden in my CV. You're on the left and the computer's on the right. First to 7 wins.</p>
                 </div>
 
                 <div class="arcade" id="arcade">
-                    <div class="arcade-hud" aria-live="off">
-                        <div><span>Score</span><strong id="g-score">0</strong></div>
+                    <div class="arcade-hud">
+                        <div><span>You</span><strong id="g-you">0</strong></div>
+                        <div><span>Computer</span><strong id="g-cpu">0</strong></div>
+                        <div><span>Rally</span><strong id="g-rally">0</strong></div>
                         <div><span>Best</span><strong id="g-best">0</strong></div>
-                        <div><span>Level</span><strong id="g-level">1</strong></div>
-                        <div><span>Lives</span><strong id="g-lives" class="lives" aria-label="3 lives">●●●</strong></div>
                     </div>
 
                     <div class="arcade-screen">
-                        <canvas id="game" tabindex="0" role="img" aria-label="Packet Muncher game board"></canvas>
+                        <canvas id="game" tabindex="0" role="img" aria-label="Ping Pong game"></canvas>
                         <div class="arcade-overlay" id="g-overlay">
                             <p class="arcade-title" id="g-title">Ready?</p>
-                            <p id="g-msg">Use the arrow keys or WASD. On a phone, swipe or use the pad.</p>
+                            <p id="g-msg">Move with your mouse, W/S or the arrow keys. On a phone, drag your finger.</p>
                             <button class="btn" type="button" id="g-start">Start game</button>
                         </div>
                     </div>
 
-                    <div class="dpad" aria-label="Direction pad">
-                        <button type="button" data-dir="up" aria-label="Up">▲</button>
-                        <button type="button" data-dir="left" aria-label="Left">◀</button>
-                        <button type="button" data-dir="right" aria-label="Right">▶</button>
-                        <button type="button" data-dir="down" aria-label="Down">▼</button>
-                    </div>
-
-                    <p class="arcade-help"><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> or <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to move · <kbd>P</kbd> to pause</p>
+                    <p class="arcade-help">Mouse, <kbd>W</kbd><kbd>S</kbd> or <kbd>↑</kbd><kbd>↓</kbd> to move · <kbd>P</kbd> to pause</p>
                 </div>
             </div>
         </section>
@@ -333,7 +326,7 @@
     </footer>
 
     <script src="js/site.js"></script>
-    <script src="js/game.js"></script>
+    <script src="js/pong.js"></script>
 </body>
 
 </html>
