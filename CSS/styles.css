@@ -1270,3 +1270,99 @@ section {
   section { padding: 1.25rem 0; }
   .job, .skill-group, .cert, .project { break-inside: avoid; }
 }
+
+/* ---------- FOV CRM 2.0 story ---------- */
+
+.ver-tag {
+  display: inline-block;
+  vertical-align: middle;
+  font-family: var(--mono);
+  font-size: 0.4em;
+  font-weight: 600;
+  padding: 0.25em 0.6em;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: #062a2c;
+  letter-spacing: 0;
+}
+
+.project-page h2 {
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  margin-top: 2.5rem;
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.compare-col {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.5rem;
+}
+
+.compare-col ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.compare-col li {
+  position: relative;
+  padding-left: 1.6rem;
+  margin-bottom: 0.65rem;
+  font-size: 0.96rem;
+}
+
+.compare-col li::before {
+  content: "✕";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: #dc2626;
+}
+
+.compare-col--new {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 1px var(--teal) inset;
+}
+
+.compare-col--new li::before {
+  content: "✓";
+  color: var(--live);
+}
+
+.demo-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin: 2rem 0 0;
+}
+
+.demo-cta span {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin-top: auto;
+}
+
+.project h3 .badge {
+  vertical-align: middle;
+  margin-left: 0.35rem;
+}
+
+@media (max-width: 640px) {
+  .compare {
+    grid-template-columns: 1fr;
+  }
+}
