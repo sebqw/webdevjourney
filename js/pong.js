@@ -280,7 +280,7 @@
         state = 'over';
         const won = scoreYou > scoreCpu;
         showOverlay(
-            won ? 'You win!' : 'Request timed out',
+            won ? 'You win!' : 'GAME OVER',
             (won ? 'Nice one. ' : 'The computer won this time. ') + scoreYou + '–' + scoreCpu + '. Best rally: ' + bestRally + '.',
             'Play again'
         );
