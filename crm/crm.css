@@ -787,9 +787,34 @@ legend {
     width: 100%;
     max-width: none;
     max-height: 92%;
+    max-height: 92dvh; /* tracks the visible screen when the keyboard opens */
     margin: auto 0 0;
     border-radius: 18px 18px 0 0;
   }
+
+  .dialog-foot {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* iPhones zoom the whole page in when you tap a field with text under 16px,
+   and it stays zoomed after the form closes. 16px stops that. */
+@media (pointer: coarse) {
+  .search input,
+  .field input,
+  .note-add input {
+    font-size: 16px;
+  }
+}
+
+/* Stop the page behind an open form from scrolling on touch screens */
+html:has(.client-dialog[open]) {
+  overflow: hidden;
+}
+
+/* Keep the pop-up message clear of the iPhone home bar */
+.toast {
+  bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
 }
 
 @media (prefers-reduced-motion: reduce) {

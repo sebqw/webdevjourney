@@ -261,7 +261,11 @@
         }
 
         dialog.showModal();
-        field('firstName').focus();
+        // On phones, focusing a field pops the keyboard up over the form,
+        // so only jump to the first field when there's a mouse or trackpad.
+        if (window.matchMedia('(pointer: fine)').matches) {
+            field('firstName').focus();
+        }
     }
 
     function closeDialog() {
@@ -473,8 +477,11 @@
         const link = el('a');
         link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
         link.download = 'fov-crm-clients.csv';
+        document.body.append(link);
         link.click();
-        URL.revokeObjectURL(link.href);
+        link.remove();
+        // Safari needs a moment to read the file before it's released
+        setTimeout(function () { URL.revokeObjectURL(link.href); }, 1000);
     });
 
     $('#reset-demo').addEventListener('click', function () {
