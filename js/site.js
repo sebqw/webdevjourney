@@ -39,13 +39,24 @@
     }
 
     if (themeBtn) {
+        // Fade colours for a moment while the theme changes
+        const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let fadeTimer;
+        function fadeThemeChange() {
+            if (reduceMotionQuery.matches) return;
+            root.classList.add('theme-fading');
+            clearTimeout(fadeTimer);
+            fadeTimer = setTimeout(function () { root.classList.remove('theme-fading'); }, 900);
+        }
+
         themeBtn.addEventListener('click', function () {
             const next = isDark() ? 'light' : 'dark';
+            fadeThemeChange();
             root.dataset.theme = next;
             try { localStorage.setItem('theme', next); } catch (e) {}
             updateThemeLabel();
         });
-        prefersDark.addEventListener('change', updateThemeLabel);
+        prefersDark.addEventListener('change', function () { fadeThemeChange(); updateThemeLabel(); });
         updateThemeLabel();
     }
 

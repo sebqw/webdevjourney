@@ -1577,20 +1577,29 @@ kbd {
 }
 
 /* ---------- Light mode: daytime sky in the header ----------
-   Dark mode keeps the night sky and moon (see below). */
+   The night sky is the header's own background. The daytime sky sits on
+   top of it as a layer that fades out in dark mode, and the moon fades in,
+   so switching themes is a smooth cross-fade rather than a jump. */
 
-.hero {
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
   /* Darker on the left behind the text, clear at the top right so the sun shows */
   background:
     linear-gradient(to right, rgba(5, 25, 70, 0.8) 0%, rgba(5, 25, 70, 0.55) 45%, rgba(5, 25, 70, 0.05) 100%),
     linear-gradient(to bottom, transparent 55%, rgba(14, 60, 105, 0.6) 100%),
     url("../images/sunshine.webp") right 70% / cover no-repeat,
     #2f7fd0;
+  opacity: 1;
+  transition: opacity 0.8s ease;
 }
 
 @media (max-width: 900px) {
   /* Text runs full width on phones, so tint the whole sky evenly */
-  .hero {
+  .hero::after {
     background:
       linear-gradient(to bottom, rgba(5, 25, 70, 0.45) 0%, rgba(5, 25, 70, 0.7) 40%, rgba(5, 25, 70, 0.7) 100%),
       url("../images/sunshine.webp") 80% top / cover no-repeat,
@@ -1599,27 +1608,36 @@ kbd {
 }
 
 .moon {
-  display: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .hero {
-    background:
-      radial-gradient(60rem 30rem at 85% -10%, rgba(102, 191, 191, 0.25), transparent 60%),
-      linear-gradient(to bottom, var(--night) 0%, var(--night-2) 60%, #1d4f7a 100%);
-  }
-
-  :root:not([data-theme="light"]) .moon {
-    display: block;
-  }
+  :root:not([data-theme="light"]) .hero::after { opacity: 0; }
+  :root:not([data-theme="light"]) .moon { opacity: 0.55; }
 }
 
-:root[data-theme="dark"] .hero {
-  background:
-    radial-gradient(60rem 30rem at 85% -10%, rgba(102, 191, 191, 0.25), transparent 60%),
-    linear-gradient(to bottom, var(--night) 0%, var(--night-2) 60%, #1d4f7a 100%);
+:root[data-theme="dark"] .hero::after { opacity: 0; }
+:root[data-theme="dark"] .moon { opacity: 0.55; }
+
+/* While the theme is switching, every colour fades instead of jumping.
+   site.js adds this class for under a second, so normal hovers and
+   animations aren't slowed down the rest of the time. */
+html.theme-fading,
+html.theme-fading *,
+html.theme-fading *::before,
+html.theme-fading *::after {
+  transition:
+    background-color 0.6s ease,
+    color 0.6s ease,
+    border-color 0.6s ease,
+    fill 0.6s ease,
+    stroke 0.6s ease,
+    box-shadow 0.6s ease,
+    opacity 0.8s ease !important;
 }
 
-:root[data-theme="dark"] .moon {
-  display: block;
+@media (prefers-reduced-motion: reduce) {
+  .hero::after,
+  .moon { transition: none; }
 }
