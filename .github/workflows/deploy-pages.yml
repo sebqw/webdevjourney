@@ -1,0 +1,42 @@
+# Publishes the site to GitHub Pages on every push to main.
+# The site is plain HTML, CSS and JavaScript, so the files are published
+# exactly as they are, with no build step.
+#
+# For this to run, Settings > Pages > Source must be set to "GitHub Actions".
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  # Lets you run it by hand from the Actions tab
+  workflow_dispatch:
+
+# Only what's needed to publish to Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; a newer push waits rather than cancelling a live one
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
