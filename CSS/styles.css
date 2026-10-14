@@ -21,6 +21,8 @@
   --chip: #e6f4f4;
   --chip-ink: #0b6f73;
   --live: #1f9d55;
+  --progress-ink: #a16207;
+  --shadow: rgba(11, 22, 64, 0.12);
 
   --display: 'Sora', 'Segoe UI', system-ui, sans-serif;
   --body: 'Roboto', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -32,8 +34,10 @@
   color-scheme: light;
 }
 
+/* Dark theme: follows the system unless the visitor picks one with the
+   switch in the nav (stored as data-theme on <html>). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #0a1120;
     --bg-alt: #0e1729;
     --card: #121d33;
@@ -44,8 +48,26 @@
     --chip-ink: #7fd6d6;
     --teal: #3cc1c4;
     --live: #4ade80;
+    --progress-ink: #facc15;
+    --shadow: rgba(0, 0, 0, 0.45);
     color-scheme: dark;
   }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0a1120;
+  --bg-alt: #0e1729;
+  --card: #121d33;
+  --ink: #e5eef0;
+  --ink-soft: #9db1b8;
+  --line: #22324f;
+  --chip: #15303d;
+  --chip-ink: #7fd6d6;
+  --teal: #3cc1c4;
+  --live: #4ade80;
+  --progress-ink: #facc15;
+  --shadow: rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
 }
 
 *,
@@ -164,16 +186,100 @@ a {
   list-style: none;
 }
 
+.nav-links {
+  margin-left: auto;
+}
+
 .nav-links a {
+  position: relative;
+  display: inline-block;
+  padding: 0.35rem 0;
   color: #d5e6f0;
   text-decoration: none;
   font-size: 0.92rem;
+  transition: color 0.2s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--teal-soft);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
 }
 
 .nav-links a:hover,
-.nav-links a[aria-current="page"] {
-  color: var(--teal-soft);
+.nav-links a[aria-current] {
+  color: #fff;
 }
+
+.nav-links a:hover::after,
+.nav-links a[aria-current]::after {
+  transform: scaleX(1);
+}
+
+.theme-toggle,
+.menu-toggle {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #d5e6f0;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.theme-toggle:hover,
+.menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.theme-toggle svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+/* Show the moon in light mode and the sun in dark mode */
+.icon-sun { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .icon-sun { display: block; }
+  :root:not([data-theme="light"]) .icon-moon { display: none; }
+}
+
+:root[data-theme="dark"] .icon-sun { display: block; }
+:root[data-theme="dark"] .icon-moon { display: none; }
+
+.menu-toggle {
+  display: none;
+  order: 3;
+  gap: 4px;
+  align-content: center;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 1.1rem;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
 /* ---------- Hero ---------- */
 
@@ -280,6 +386,32 @@ a {
   pointer-events: none;
   -webkit-mask-image: linear-gradient(to top, #000 40%, transparent);
   mask-image: linear-gradient(to top, #000 40%, transparent);
+}
+
+/* A scattering of stars across the night sky */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1.5px 1.5px at 8% 18%, #fff, transparent),
+    radial-gradient(1px 1px at 22% 62%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 35% 12%, #fff, transparent),
+    radial-gradient(1px 1px at 48% 40%, #fff, transparent),
+    radial-gradient(1px 1px at 57% 8%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 66% 55%, #fff, transparent),
+    radial-gradient(1px 1px at 74% 28%, #fff, transparent),
+    radial-gradient(1px 1px at 91% 48%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 14% 82%, #fff, transparent),
+    radial-gradient(1px 1px at 83% 74%, #fff, transparent);
+  opacity: 0.55;
+  animation: twinkle 6s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  to { opacity: 0.25; }
 }
 
 /* PowerShell card */
@@ -453,11 +585,47 @@ section {
 /* Experience timeline */
 
 .timeline {
+  position: relative;
   list-style: none;
+  --gutter: 2.25rem;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 var(--gutter);
   display: grid;
   gap: 1.25rem;
+}
+
+/* The line running down the left of the timeline */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0.55rem;
+  top: 1.9rem;
+  bottom: 1.9rem;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--teal), var(--line));
+}
+
+/* A dot on the line for each role */
+.job::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--gutter) + 0.55rem - 6px);
+  top: 1.85rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg-alt);
+  border: 2px solid var(--teal);
+}
+
+.job--current::before {
+  background: var(--teal);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--teal) 25%, transparent);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% { box-shadow: 0 0 0 9px color-mix(in srgb, var(--teal) 0%, transparent); }
 }
 
 .job {
@@ -514,7 +682,53 @@ section {
 
 .job--current {
   border-color: var(--teal);
-  box-shadow: 0 0 0 1px var(--teal) inset;
+  box-shadow: 0 0 0 1px var(--teal) inset, 0 18px 40px var(--shadow);
+}
+
+/* ---------- Card hover ---------- */
+
+.job,
+.skill-group,
+.cert,
+.project {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.skill-group:hover,
+.cert:hover,
+.project:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--teal) 55%, var(--line));
+  box-shadow: 0 18px 36px var(--shadow);
+}
+
+.project img {
+  transition: transform 0.5s ease;
+}
+
+.project:hover img {
+  transform: scale(1.03);
+}
+
+.skill-group h3 svg {
+  padding: 0.35rem;
+  box-sizing: content-box;
+  border-radius: 10px;
+  background: var(--chip);
+}
+
+/* ---------- Fade in on scroll (added by js/site.js) ---------- */
+
+.reveal {
+  opacity: 0;
+  translate: 0 1.25rem;
+  transition: opacity 0.6s ease var(--delay, 0ms), translate 0.6s ease var(--delay, 0ms),
+              transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  translate: 0 0;
 }
 
 /* Chips */
@@ -615,13 +829,7 @@ section {
 
 .badge--progress {
   background: rgba(234, 179, 8, 0.15);
-  color: #a16207;
-}
-
-@media (prefers-color-scheme: dark) {
-  .badge--progress {
-    color: #facc15;
-  }
+  color: var(--progress-ink);
 }
 
 /* Projects */
@@ -943,8 +1151,60 @@ section {
 }
 
 @media (max-width: 640px) {
+  .menu-toggle {
+    display: grid;
+  }
+
+  .theme-toggle {
+    margin-left: auto;
+  }
+
+  /* Drop-down panel under the nav bar */
   .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem 1rem 1rem;
+    background: var(--night);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-0.5rem);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s 0.2s;
+  }
+
+  .nav-links.is-open {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .nav-links li + li {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 0.85rem 0.25rem;
+    font-size: 1.05rem;
+  }
+
+  .nav-links a::after {
     display: none;
+  }
+
+  .nav-links a[aria-current] {
+    color: var(--teal-soft);
+  }
+
+  .hero-actions .btn {
+    flex: 1 1 auto;
+    justify-content: center;
   }
 
   .about {
@@ -953,6 +1213,18 @@ section {
 
   .profile-pic {
     max-width: 160px;
+  }
+
+  .timeline {
+    --gutter: 1.6rem;
+  }
+
+  .timeline::before {
+    left: 0.35rem;
+  }
+
+  .job::before {
+    left: calc(-1 * var(--gutter) + 0.35rem - 6px);
   }
 
   .job {
@@ -975,11 +1247,23 @@ section {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .t-cursor,
-  .slide img { animation: none; }
+  .slide img,
+  .hero::before,
+  .job--current::before { animation: none; }
+  .nav-links,
+  .skill-group,
+  .cert,
+  .project,
+  .project img { transition: none; }
+  .skill-group:hover,
+  .cert:hover,
+  .project:hover,
+  .project:hover img { transform: none; }
   .btn { transition: none; }
 }
 
 @media print {
+  .reveal { opacity: 1; translate: none; }
   .site-nav, .hero-actions, .terminal, .mountain, .moon, .contact .button-row { display: none; }
   .hero { background: none; color: #000; padding: 0; }
   .hero h1, .hero .role, .hero .pitch { color: #000; }
