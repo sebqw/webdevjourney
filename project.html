@@ -43,7 +43,7 @@
         <div class="wrap">
             <p class="eyebrow">Apprenticeship project · Rebuilt in 2026</p>
             <h1>FOV CRM <span class="ver-tag">2.0</span></h1>
-            <p>A client management app for a recruitment agency. I first built it in C# during my IT apprenticeship from a brief I was set. Now I've rebuilt it from the ground up as a web app you can try right here.</p>
+            <p>A client management app for a recruitment agency. I first built it in C# in 24 hours for my IT apprenticeship. In 2026 I rebuilt it from scratch as a secure web app, using everything I've learned since. You can try it right here.</p>
             <div class="hero-actions">
                 <a class="btn" href="crm/">Try the live demo →</a>
                 <a class="btn btn--ghost" href="https://drive.google.com/drive/folders/1RK36pN2sy9-CgBdnTtaF7-MJBE9qOCp9?usp=sharing" target="_blank" rel="noopener">Original project files</a>
@@ -64,40 +64,40 @@
                 <h2>The brief</h2>
                 <p>A recruitment agency needed one place to keep their client contacts and see how each account was doing. Staff had to be able to add new clients, find existing ones quickly, update their details, and rate each company's risk as Green, Orange or Red and its status as Active or Inactive.</p>
 
-                <h2>How it was really built</h2>
+                <h2>How I built it</h2>
                 <ul class="story-stats">
                     <li><strong>24 hours</strong><span>to go from the brief to a working app</span></li>
                     <li><strong>40-hour weeks</strong><span>in a job with no coding in it</span></li>
                     <li><strong>Self-taught</strong><span>C# learned in my own time</span></li>
                 </ul>
-                <p>I was an apprentice working full time in a role that didn't involve any programming, so I learned C# in the evenings and at weekends. When the brief landed, I had 24 hours to propose, build and test a solution.</p>
-                <p>I handed in an app with three working screens connected to a real database, covering everything the brief asked for. It also had mistakes I couldn't see yet. I didn't know about SQL injection, and with no time left for testing, the update and delete buttons went in broken.</p>
+                <p>I was an apprentice working full time in a role with no programming in it, so I learned C# in the evenings and at weekends. When the brief landed, I had 24 hours to propose a solution, build it and test it.</p>
+                <p>I handed in a working app: three screens connected to a real database, covering everything the brief asked for. With only 24 hours there was little time left for testing, and like most first projects it had rough edges. Looking back with more experience, I can see exactly where it could be stronger, and that's what made it worth rebuilding.</p>
 
-                <h2>Version 2.0: what I changed</h2>
-                <p>A few years on, now working in IT support and security, I can see those mistakes clearly. Rather than hide the old project, I rebuilt it the way I'd build it today.</p>
+                <h2>Version 2.0: what I learned, and how I used it</h2>
+                <p>Supporting real business systems every day has changed how I think about software: how an app should handle what people type, why testing matters, and how data should be organised. Rather than leave the original as it was, I rebuilt it the way I'd build it today.</p>
 
                 <div class="compare">
                     <div class="compare-col">
                         <h3>Version 1 (2022)</h3>
                         <ul>
-                            <li>Search boxes put the user's text straight into the SQL query, so it was open to SQL injection</li>
-                            <li>The update and delete queries had syntax errors, so editing didn't work reliably</li>
-                            <li>People and companies were saved in two separate tables with nothing linking them</li>
-                            <li>No email checks before saving; the phone box only stopped you typing letters</li>
+                            <li>Searches built their database queries directly from what the user typed, which is a security risk known as SQL injection</li>
+                            <li>Update and delete weren't fully tested in the time available, so editing didn't work reliably</li>
+                            <li>Contact details and company details sat in separate tables that weren't linked</li>
+                            <li>Emails weren't validated, and the phone box only blocked letters</li>
                             <li>Three separate windows to switch between</li>
-                            <li>Only ran on Windows with Microsoft Access installed</li>
+                            <li>Ran only on Windows with Microsoft Access installed</li>
                         </ul>
                     </div>
                     <div class="compare-col compare-col--new">
                         <h3>Version 2.0 (2026)</h3>
                         <ul>
-                            <li>Searching is plain text matching, and everything a user types is shown as text, never run as code</li>
-                            <li>Add, edit and delete all work, with an undo button if you delete by mistake</li>
-                            <li>Each client is one record: contact, company, risk and status together</li>
-                            <li>Checks for valid emails, UK phone numbers and duplicate clients, with clear error messages</li>
-                            <li>Imports the agency's existing Excel sheet of 1,000 contacts, either as one sheet or as the three-table layout from my original design</li>
-                            <li>One screen: live summary counts, a search across every field, filters, sortable columns, and an activity log for each client</li>
-                            <li>Runs in any browser, works on phones, supports dark mode, and exports to CSV</li>
+                            <li><strong>Never trust user input.</strong> Searching is plain text matching, and anything a user types is shown as text, never run as code</li>
+                            <li><strong>Test what matters most.</strong> Add, edit and delete all work, with an undo button if you delete by mistake</li>
+                            <li><strong>Keep related data together.</strong> Each client is one record: contact, company, risk and status</li>
+                            <li><strong>Check data on the way in.</strong> Valid emails, UK phone numbers and no duplicate clients, with clear error messages</li>
+                            <li><strong>Plan for real data.</strong> Imports the agency's existing spreadsheet of 1,000 contacts, as one sheet or in the three-table layout from my original design</li>
+                            <li><strong>Make it easy to use.</strong> One screen with live summary counts, search across every field, filters, sortable columns and an activity log for each client</li>
+                            <li><strong>Make it work anywhere.</strong> Runs in any browser and on phones, supports dark mode, and exports to CSV</li>
                         </ul>
                     </div>
                 </div>
@@ -137,8 +137,8 @@
 
                 <div class="reflection">
                     <h3>Why it still matters</h3>
-                    <p>I could have done better first time round, and I'm fine saying that. What I'm proud of is that I got it done under pressure and kept learning afterwards. That project is a big part of how I got where I am.</p>
-                    <p>This project taught me how applications store and work with data, and gave me the coding background I now use for PowerShell scripting in my support role. Coming back to it, the biggest lesson was clear: never trust what a user types. That's the first thing I fixed in version 2.0.</p>
+                    <p>I'm proud of version 1. I built it in 24 hours, in a language I'd taught myself, while working full time, and it did what the brief asked. It taught me how applications store and work with data, and gave me the coding foundation I now use for PowerShell scripting at work.</p>
+                    <p>Rebuilding it showed me how far I've come. I now think about security, testing and data quality from the start, the same way I do when supporting clients' systems. Going back to something I built, learning from it and making it better is how I approach my work, and how I'm studying for my Microsoft certifications.</p>
                 </div>
             </div>
         </section>
