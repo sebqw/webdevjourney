@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MS-102 Revision Cards | Sebastian Quintana Warsop</title>
+    <meta name="description" content="Flashcards I use to revise for Microsoft 365 Administrator (MS-102): tenant setup, roles, identity sync, security and Microsoft Purview.">
+    <meta name="theme-color" content="#0b1640">
+    <link rel="icon" href="../favicon.ico?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=La+Belle+Aurore&family=Roboto:wght@400;500;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/styles.css">
+    <link rel="stylesheet" href="notes.css">
+    <script>try { var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+</head>
+
+<body class="notes-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <nav class="site-nav" aria-label="Main">
+        <div class="wrap">
+            <a class="logo" href="../index.html">Seb.</a>
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="../index.html#experience">Experience</a></li>
+                <li><a href="../index.html#skills">Skills</a></li>
+                <li><a href="../index.html#certifications">Certifications</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#play">Play</a></li>
+                <li><a href="index.html" aria-current="page">Notes</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" type="button" aria-label="Switch to dark mode">
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <main id="main" class="notes">
+        <div class="wrap">
+            <header class="notes-head">
+                <div>
+                    <p class="eyebrow"><a href="index.html">Notes</a> · Microsoft 365</p>
+                    <h1>MS-102 revision cards</h1>
+                    <p class="notes-sub">The flashcards I use to revise for Microsoft 365 Administrator (MS-102), written from my study notes and backed by examples from my own test tenant. Flip a card, then mark whether you got it.</p>
+                </div>
+                <div class="progress">
+                    <div class="progress-nums">
+                        <div><span>Cards</span><strong id="p-total">0</strong></div>
+                        <div class="is-known"><span>Got it</span><strong id="p-known">0</strong></div>
+                        <div class="is-learning"><span>Learning</span><strong id="p-learning">0</strong></div>
+                    </div>
+                    <div class="bar" id="p-bar-wrap" role="progressbar" aria-label="Cards marked got it" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="p-bar"></span></div>
+                </div>
+            </header>
+
+            <div class="toolbar">
+                <ul class="topics" id="topics" aria-label="Filter by topic"></ul>
+                <div class="tools">
+                    <button class="tool" type="button" id="mode-cards" aria-pressed="true">Cards</button>
+                    <button class="tool" type="button" id="mode-sheet" aria-pressed="false">Study sheet</button>
+                    <button class="tool" type="button" id="shuffle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+                        Shuffle
+                    </button>
+                    <button class="tool" type="button" id="only-learning" aria-pressed="false">Hide cards I've got</button>
+                    <button class="tool" type="button" id="reset">Reset progress</button>
+                </div>
+            </div>
+
+            <section id="card-view" aria-label="Flashcards">
+                <div class="stage" id="stage">
+                    <button class="flashcard" id="flashcard" type="button" aria-pressed="false" aria-label="Show answer">
+                        <span class="flip">
+                            <span class="face face--front" id="face-front">
+                                <span class="face-top"><span id="front-topic"></span><span id="front-status"></span></span>
+                                <span class="question" id="front-q"></span>
+                                <span class="hint">Tap the card or press Space to see the answer</span>
+                            </span>
+                            <span class="face face--back" id="face-back" aria-hidden="true">
+                                <span class="face-top"><span id="back-topic"></span><span id="back-status"></span></span>
+                                <span class="answer-q" id="back-q"></span>
+                                <span class="answer" id="back-a"></span>
+                            </span>
+                        </span>
+                    </button>
+
+                    <div class="card-controls">
+                        <div class="pager">
+                            <button class="round" type="button" id="prev" aria-label="Previous card">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+                            </button>
+                            <output id="position" aria-live="polite">1 / 1</output>
+                            <button class="round" type="button" id="next" aria-label="Next card">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                            </button>
+                        </div>
+                        <div class="rate">
+                            <button type="button" class="rate-learning" id="rate-learning" disabled>Still learning</button>
+                            <button type="button" class="rate-known" id="rate-known" disabled>Got it</button>
+                        </div>
+                    </div>
+                    <p class="keys"><kbd>Space</kbd> flip · <kbd>←</kbd> <kbd>→</kbd> move · <kbd>1</kbd> still learning · <kbd>2</kbd> got it</p>
+                </div>
+
+                <div class="empty-state" id="cards-empty" hidden>
+                    <strong>Nothing left in this pile.</strong>
+                    You've marked every card here as "Got it". Turn off "Hide cards I've got" or choose another topic.
+                </div>
+            </section>
+
+            <section id="sheet-view" aria-label="Study sheet" hidden>
+                <label class="sheet-search">
+                    <span class="visually-hidden">Search the study sheet</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                    <input type="search" id="sheet-q" placeholder="Search questions and answers" autocomplete="off">
+                </label>
+                <p class="sheet-count" id="sheet-count" aria-live="polite"></p>
+                <div id="sheet-list"></div>
+                <div class="empty-state" id="sheet-empty" hidden>
+                    <strong>No cards match.</strong>
+                    Try a different word, or switch to "All topics".
+                </div>
+            </section>
+
+            <p class="visually-hidden" id="announce" aria-live="polite"></p>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <p>© <span id="year">2026</span> Sebastian Quintana Warsop</p>
+            <p><a href="../index.html">Back to CV</a></p>
+        </div>
+    </footer>
+
+    <script src="../js/site.js"></script>
+    <script src="ms102-cards.js"></script>
+    <script src="flashcards.js"></script>
+</body>
+
+</html>

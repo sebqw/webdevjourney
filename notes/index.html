@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes | Sebastian Quintana Warsop</title>
+    <meta name="description" content="My documentation hub: revision notes and write-ups from my Microsoft 365 test tenant.">
+    <meta name="theme-color" content="#0b1640">
+    <link rel="icon" href="../favicon.ico?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=La+Belle+Aurore&family=Roboto:wght@400;500;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/styles.css">
+    <link rel="stylesheet" href="notes.css">
+    <script>try { var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+</head>
+
+<body class="notes-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <nav class="site-nav" aria-label="Main">
+        <div class="wrap">
+            <a class="logo" href="../index.html">Seb.</a>
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="../index.html#experience">Experience</a></li>
+                <li><a href="../index.html#skills">Skills</a></li>
+                <li><a href="../index.html#certifications">Certifications</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#play">Play</a></li>
+                <li><a href="index.html" aria-current="page">Notes</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" type="button" aria-label="Switch to dark mode">
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <main id="main" class="notes">
+        <div class="wrap">
+            <header class="notes-head">
+                <div>
+                    <p class="eyebrow">Notes</p>
+                    <h1>Documentation hub</h1>
+                    <p class="notes-sub">Where I keep my study notes and write-ups. Most of it comes from hands-on work in my own Microsoft 365 test tenant, so it's practical rather than just theory.</p>
+                </div>
+            </header>
+
+            <ul class="hub-list">
+                <li>
+                    <a class="hub-card" href="ms102.html">
+                        <p class="eyebrow">Microsoft 365 · Exam revision</p>
+                        <h2>MS-102 revision cards</h2>
+                        <p><span id="hub-ms102-count">Flashcards</span> covering tenant setup, roles and permissions, identity sync, security threats and Microsoft Purview, with a searchable study sheet.</p>
+                        <span class="go">Open the cards →</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <p>© <span id="year">2026</span> Sebastian Quintana Warsop</p>
+            <p><a href="../index.html">Back to CV</a></p>
+        </div>
+    </footer>
+
+    <script src="../js/site.js"></script>
+    <script src="ms102-cards.js"></script>
+    <script>
+        var n = (window.MS102_CARDS || []).length;
+        if (n) document.getElementById('hub-ms102-count').textContent = n + ' flashcards';
+    </script>
+</body>
+
+</html>

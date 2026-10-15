@@ -1658,3 +1658,14 @@ html.theme-fading *::after {
 .skill-group--wide p {
   max-width: 48rem;
 }
+
+.cert-link {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.cert-link:hover {
+  text-decoration: underline;
+}
