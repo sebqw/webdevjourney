@@ -1397,7 +1397,7 @@ section {
   }
 }
 
-/* ---------- Ping Pong arcade ---------- */
+/* ---------- Packet Run arcade ---------- */
 
 .arcade {
   max-width: 44rem;
@@ -1444,8 +1444,44 @@ section {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 21 / 13; /* matches the maze: 21 tiles wide, 13 tall */
   touch-action: none;
+}
+
+/* On-screen direction pad, shown on touch screens only */
+.dpad {
+  display: none;
+  grid-template-columns: repeat(3, 3.4rem);
+  grid-template-rows: repeat(2, 3rem);
+  grid-template-areas: ". up ." "left down right";
+  gap: 0.4rem;
+  justify-content: center;
+  margin-top: 0.85rem;
+}
+
+.dpad button {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.07);
+  color: #d5e6f0;
+  font-size: 1.1rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.dpad button:active {
+  background: rgba(102, 191, 191, 0.35);
+}
+
+.dpad-up { grid-area: up; }
+.dpad-left { grid-area: left; }
+.dpad-right { grid-area: right; }
+.dpad-down { grid-area: down; }
+
+@media (pointer: coarse) {
+  .dpad { display: grid; }
 }
 
 #game:focus-visible {
